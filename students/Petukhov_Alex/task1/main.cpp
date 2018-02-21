@@ -6,6 +6,8 @@
 #include <windows.h>
 #include <conio.h>
 #include <stdio.h>
+#include <string>
+
 
 
 using namespace std;
@@ -18,10 +20,11 @@ private :
 	int hour, min, sec;
 public :
 	TTime(int _hour = 0, int _min = 0, int _sec = 0);
-	void setTime();
+	string showTime();
+	void setTime(int _hour, int _min, int _sec);
 	void timeDiff(int &_hour, int &_min, int &_sec);
-	void changeTime(int &_hour, int &_min, int &_sec, int &d);
-	void showTime();
+	void getTime(int &, int &, int &);
+	void changeTime(int _hour, int _min, int _sec, int d);
 
 	TTime& operator=(const TTime& obj) {
 		hour = obj.hour;
@@ -36,6 +39,7 @@ public :
 int main(){
 	int cur = 1, mode1, mode2, mode3, d = 0;
 	int _h = 0, _m = 0, _s = 0;
+	int hd = 0, md = 0, sd = 0;
 	TTime T1;
 	system("cls");
 	while (cur) {
@@ -48,7 +52,8 @@ int main(){
 		switch (mode1) {
 		case 1: {
 		settime:
-			T1.setTime();
+			Input(_h, _m, _s);
+			T1.setTime(_h, _m, _s);
 			system("pause");
 			system("cls");
 			break;
@@ -63,7 +68,7 @@ int main(){
 		while (cur) {
 			system("cls");
 			cout << "Current Time: ";
-			T1.showTime();
+			cout << T1.showTime() << endl;
 			cout << "1. Move time" << endl;
 			cout << "2. Enter time and calculate difference" << endl;
 			cout << "3. Exit" << endl;
@@ -97,8 +102,11 @@ int main(){
 
 			}
 			case 2: {
-				Input(_h, _m, _s);
-				T1.timeDiff(_h, _m, _s);
+				Input(hd, md, sd);
+				T1.timeDiff(hd, md, sd);
+				cout << "Difference between entered time and set time is ";
+				cout << hd << ":" << md << ":" << sd << endl;
+				system("pause");
 				break;
 
 			}
@@ -118,29 +126,26 @@ int main(){
 	}
 	system("pause");
 }
-void Input(int &hour, int &min, int &sec) {
+void Input(int &_hour, int &_min, int &_sec) {
 	cout << "Enter hour minutes and seconds separately" << endl;
 	do {
 		cout << "hours from 0 to 23: ";
 
-		cin >> hour;
-	} while (hour < 0 || hour > 23);
+		cin >> _hour;
+	} while (_hour < 0 || _hour > 23);
 
 	do {
 		cout << "minutes from 0 to 59: ";
-		cin >> min;
-	} while (min < 0 || min > 59);
+		cin >> _min;
+	} while (_min < 0 || _min > 59);
 	do {
 		cout << "seconds from 0 to 59: ";
-		cin >> sec;
-	} while (sec < 0 || sec > 59);
+		cin >> _sec;
+	} while (_sec < 0 || _sec > 59);
 	
 }
-void TTime::showTime() {
-	hour %= 24;
-	min %= 60;
-	sec %= 60;
-	cout << (hour + 24) % 24 << ":" << (min + 60) % 60 << ":" << (sec + 60) % 60 << endl;
+string TTime::showTime() {
+	return to_string(hour) + ":" + to_string(min) + ":" + to_string(sec);
 }
 void TTime::timeDiff(int &_hour, int &_min, int &_sec)
 {
@@ -153,8 +158,10 @@ void TTime::timeDiff(int &_hour, int &_min, int &_sec)
 		_min %= 60;
 	}
 	if (_hour >= 24)_hour %= 24;
-	cout << "Difference between entered time and set time is " << abs(hour - _hour) << ":" << abs(min - _min) << ":" << abs(sec - _sec) << endl;
-	system("pause");
+	_hour = abs(hour - _hour);
+	_min = abs(min - _min);
+	_sec = abs(sec - _sec);
+	
 }
 TTime::TTime(int _hour, int _min, int _sec)
 {
@@ -162,10 +169,7 @@ TTime::TTime(int _hour, int _min, int _sec)
 	min = _min;
 	sec = _sec;
 }
-void TTime::setTime() {
-	Input(hour, min, sec);
-}
-void TTime::changeTime(int &_hour, int &_min, int &_sec, int &d) {
+void TTime::changeTime(int _hour, int _min, int _sec, int d) {
 	_hour %= 24;
 	_min %= 60;
 	_sec %= 60;
@@ -195,4 +199,14 @@ void TTime::changeTime(int &_hour, int &_min, int &_sec, int &d) {
 	min %= 60;
 	sec += 60;
 	sec %= 60;
+}
+void TTime::setTime(int _hour, int _min, int _sec) {
+	hour = _hour;
+	min = _min;
+	sec = _sec;
+}
+void TTime::getTime(int &h, int &m, int &s) {
+	h = hour;
+	m = min;
+	s = sec;
 }
