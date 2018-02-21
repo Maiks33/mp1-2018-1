@@ -1,17 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
-#include <time.h>
-#include <ctime>
 #include <math.h>
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
 #include <string>
 
-
-
 using namespace std;
-
 
 void Input(int &, int &, int &);
 class TTime {
@@ -33,9 +26,6 @@ public :
 		return *this;
 	}
 };
-
-
-
 int main(){
 	int cur = 1, mode1, mode2, mode3, d = 0;
 	int _h = 0, _m = 0, _s = 0;
@@ -149,7 +139,16 @@ string TTime::showTime() {
 }
 void TTime::timeDiff(int &_hour, int &_min, int &_sec)
 {
-	if (_sec >= 60) {
+	int sec1 = hour * 3600 + min * 60 + sec; // set time in seconds
+	int sec2 = _hour * 3600 + _min * 60 + _sec; // entered time in seconds
+	int diff = abs(sec1 - sec2); 
+	_sec = diff % 60;
+	_min = (diff - _sec) / 60;
+	diff = _min;
+	_min %= 60;
+	_hour = (diff - _min) / 60;
+
+	/*if (_sec >= 60) {
 		_min += _sec / 60;
 		_sec %= 60;
 	}
@@ -160,7 +159,7 @@ void TTime::timeDiff(int &_hour, int &_min, int &_sec)
 	if (_hour >= 24)_hour %= 24;
 	_hour = abs(hour - _hour);
 	_min = abs(min - _min);
-	_sec = abs(sec - _sec);
+	_sec = abs(sec - _sec);*/
 	
 }
 TTime::TTime(int _hour, int _min, int _sec)
@@ -170,9 +169,6 @@ TTime::TTime(int _hour, int _min, int _sec)
 	sec = _sec;
 }
 void TTime::changeTime(int _hour, int _min, int _sec, int d) {
-	_hour %= 24;
-	_min %= 60;
-	_sec %= 60;
 	if (d) {
 		hour += _hour;
 		min += _min;
@@ -192,13 +188,18 @@ void TTime::changeTime(int _hour, int _min, int _sec, int d) {
 		hour += min / 60;
 		min %= 60;
 	}
-	if (hour >= 24)hour %= 24;
+
+	if (sec < 0) {
+		min--;
+		sec += 60;
+	}
+	if (min < 0) {
+		hour--;
+		min += 60;
+	}
+
 	hour += 24;
 	hour %= 24;
-	min += 60;
-	min %= 60;
-	sec += 60;
-	sec %= 60;
 }
 void TTime::setTime(int _hour, int _min, int _sec) {
 	hour = _hour;
