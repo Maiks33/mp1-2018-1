@@ -13,18 +13,16 @@ class Rational
 public:
 	int NOD(int ch, int zn);
 	int NOK(int zn, int zn1);
-	void Print();
-	
-	void PrintRational(int ch, int zn, int nod);
+	void PrintRational();
 	Rational() : ch(1), zn(1) {}
 	Rational(int _ch) : ch(_ch), zn(1) {}
 	Rational(int _ch, int _zn) : ch(_ch), zn(_zn)
 	{
-	nod = NOD(ch, zn);
-	ch = Chislit(ch, nod);
-	zn = Znamenat(zn, nod);
+		nod = NOD(ch, zn);
+		ch = Chislit(ch, nod);
+		zn = Znamenat(zn, nod);
 	}
-	Rational operator+(const Rational r)
+	Rational operator+(const Rational& r)
 	{
 		Rational sum(*this);
 		if (zn == r.zn)
@@ -35,12 +33,12 @@ public:
 		}
 		else {
 			sum.zn = NOK(zn, r.zn);
-			sum.ch = (zn / zn*ch) + (zn / r.zn*r.ch);
+			sum.ch = (sum.zn / zn*ch) + (sum.zn / r.zn*r.ch);
 			return sum;
 		}
 	}
 
-	Rational& operator-(const Rational& r)
+	Rational operator-(const Rational& r)
 	{
 		Rational sub(*this);
 		if (zn == r.zn)
@@ -57,7 +55,7 @@ public:
 	}
 
 
-	Rational& operator*(const Rational& r)
+	Rational operator*(const Rational& r)
 	{
 		Rational multi(*this);
 		int zn1, ch1;
@@ -69,7 +67,7 @@ public:
 		return multi;
 	}
 
-	Rational& operator/(const Rational& r)
+	Rational operator/(const Rational& r)
 	{
 		Rational div(*this);
 		int zn1, ch1;
@@ -89,14 +87,10 @@ public:
 	}
 };
 
-void  Rational::Print()
-{
-	cout << "Fraction of incorrect\n";
-}
 
-void  Rational::PrintRational(int ch, int zn, int nod)
+void  Rational::PrintRational()
 {
-	cout << ch << "/" << zn;
+	cout << ch << "/" << zn << "\n";
 }
 
 int Rational::Chislit(int ch, int nod)
@@ -141,11 +135,31 @@ int Rational::NOD(int ch, int zn)
 
 int Rational::NOK(int zn, int zn1)
 {
-	int i, nok;
-	nok = zn * zn1;
-	for (i = nok; i > 0; i--)
-		if (i%zn == 0 || i%zn1 == 0)
-			nok = i;
-	return nok;
+	return zn*zn1 / NOD(zn, zn1);
 }
 
+
+int main()
+{
+	Rational r, r1(0), r1_1(0), r1_2(0), r1_3(0), r2(3, 7), r3(8, 9);
+	r.PrintRational();
+	r1.PrintRational();
+	r2.PrintRational();
+	r3.PrintRational();
+
+
+	r1 = r2 + r3;
+	cout << "sum = ";
+	r1.PrintRational();
+	r1_1 = r3 - r2;
+	cout << "sub =";
+	r1_1.PrintRational();
+	r1_2 = r2*r3;
+	cout << "multi = ";
+	r1_2.PrintRational();
+	r1_3 = r2 / r3;
+	cout << "div = ";
+	r1_3.PrintRational();
+
+	return 0;
+}
