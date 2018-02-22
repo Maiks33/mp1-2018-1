@@ -8,8 +8,8 @@ class Rational
 	int ch;
 	int zn;
 	int nod;
-	int Numerator(int ch, int nod);
-	int Denominator(int zn, int nod);
+	int Chislit(int ch, int nod);
+	int Znamenat(int zn, int nod);
 public:
 	int NOD(int ch, int zn);
 	int NOK(int zn, int zn1);
@@ -21,8 +21,8 @@ public:
 	Rational(int _ch, int _zn) : ch(_ch), zn(_zn)
 	{
 	nod = NOD(ch, zn);
-	ch = Numerator(ch, nod);
-	zn = Denominator(zn, nod);
+	ch = Chislit(ch, nod);
+	zn = Znamenat(zn, nod);
 	}
 	Rational operator+(const Rational r)
 	{
@@ -64,8 +64,8 @@ public:
 		zn1 = zn * r.zn;
 		ch1 = ch * r.ch;
 		nod = NOD(ch1, zn1);
-		multi.ch = Numerator(ch1, nod);
-		multi.zn = Denominator(zn1, nod);
+		multi.ch = Chislit(ch1, nod);
+		multi.zn = Znamenat(zn1, nod);
 		return multi;
 	}
 
@@ -76,8 +76,8 @@ public:
 		ch1 = ch*r.zn;
 		zn1 = zn*r.ch;
 		nod = NOD(ch1, zn1);
-		div.ch = Numerator(ch1, nod);
-		div.zn = Denominator(zn1, nod);
+		div.ch = Chislit(ch1, nod);
+		div.zn = Znamenat(zn1, nod);
 		return div;
 	}
 
@@ -99,13 +99,13 @@ void  Rational::PrintRational(int ch, int zn, int nod)
 	cout << ch << "/" << zn;
 }
 
-int Rational::Numerator(int ch, int nod)
+int Rational::Chislit(int ch, int nod)
 {
 	ch = ch / nod;
 	return ch;
 }
 
-int Rational::Denominator(int zn, int nod)
+int Rational::Znamenat(int zn, int nod)
 {
 	zn = zn / nod;
 	return zn;
