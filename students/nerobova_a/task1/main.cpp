@@ -8,89 +8,77 @@ class Rational
 	int ch;
 	int zn;
 	int nod;
+	int Numerator(int ch, int nod);
+	int Denominator(int zn, int nod);
 public:
 	int NOD(int ch, int zn);
 	int NOK(int zn, int zn1);
 	void Print();
-	int Numerator(int ch, int nod);
-	int Denominator(int zn, int nod);
-	void  Rational::PrintRational(int ch, int zn, int nod);
+	
+	void PrintRational(int ch, int zn, int nod);
 	Rational() : ch(1), zn(1) {}
 	Rational(int _ch) : ch(_ch), zn(1) {}
 	Rational(int _ch, int _zn) : ch(_ch), zn(_zn)
 	{
-		if (zn == 0)
-		{
-			void Print();
-			return;
-		}
-		else
-		{
-			nod = NOD(ch, zn);
-			ch = Numerator(ch, nod);
-			zn = Denominator(zn, nod);
-			PrintRational(ch, zn, nod);
-		}
+	nod = NOD(ch, zn);
+	ch = Numerator(ch, nod);
+	zn = Denominator(zn, nod);
 	}
-	Rational& operator+(const Rational& r)
+	Rational operator+(const Rational r)
 	{
-		Rational sum_zn(*this);
-		Rational sum_ch(*this);
+		Rational sum(*this);
 		if (zn == r.zn)
 		{
-			sum_ch = ch + r.ch;
-			sum_zn = zn;
-			return *this;
+			sum.ch = ch + r.ch;
+			sum.zn = zn;
+			return sum;
 		}
 		else {
-			sum_zn = NOK(zn, r.zn);
-			sum_ch = (sum_zn / zn*ch) + (sum_zn / r.zn*r.ch);
-			return *this;
+			sum.zn = NOK(zn, r.zn);
+			sum.ch = (zn / zn*ch) + (zn / r.zn*r.ch);
+			return sum;
 		}
 	}
 
 	Rational& operator-(const Rational& r)
 	{
-		Rational sub_zn(*this);
-		Rational sub_ch(*this);
+		Rational sub(*this);
 		if (zn == r.zn)
 		{
-			sub_ch = ch - r.ch;
-			sub_zn = zn;
-			return *this;
+			sub.ch = ch - r.ch;
+			sub.zn = zn;
+			return sub;
 		}
 		else {
-			sub_zn = NOK(zn, r.zn);
-			sub_ch = (sub_zn / zn*ch) - (sub_zn / r.zn*r.ch);
-			return *this;
+			sub.zn = NOK(zn, r.zn);
+			sub.ch = (sub.zn / zn*ch) - (sub.zn / r.zn*r.ch);
+			return sub;
 		}
 	}
 
 
 	Rational& operator*(const Rational& r)
 	{
-		Rational multi_ch(*this);
-		Rational multi_zn(*this);
-		int zn1, zn2;
+		Rational multi(*this);
+		int zn1, ch1;
 		zn1 = zn * r.zn;
-		zn2 = ch * r.ch;
-		nod = NOD(ch, zn);
-		multi_ch = Numerator(ch, nod);
-		multi_zn = Denominator(zn, nod);
-		return *this;
+		ch1 = ch * r.ch;
+		nod = NOD(ch1, zn1);
+		multi.ch = Numerator(ch1, nod);
+		multi.zn = Denominator(zn1, nod);
+		return multi;
 	}
 
 	Rational& operator/(const Rational& r)
 	{
-		Rational div_ch(*this);
-		Rational div_zn(*this);
-		int zn1, zn2;
+		Rational div(*this);
+		int zn1, ch1;
+		ch1 = ch*r.zn;
 		zn1 = zn*r.ch;
-		zn2 = ch*r.zn;
-		nod = NOD(ch, zn);
-		div_ch = Numerator(ch, nod);
-		div_zn = Denominator(zn, nod);
-		return *this;
+		nod = NOD(ch1, zn1);
+		div.ch = Numerator(ch1, nod);
+		div.zn = Denominator(zn1, nod);
+		return div;
 	}
 
 	Rational& operator=(const Rational& r)
@@ -108,8 +96,6 @@ void  Rational::Print()
 
 void  Rational::PrintRational(int ch, int zn, int nod)
 {
-	ch = ch*nod;
-	zn = zn*nod;
 	cout << ch << "/" << zn;
 }
 
