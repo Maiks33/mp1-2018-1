@@ -1,7 +1,38 @@
 #include <iostream>
+
 using namespace std;
 
-class int64 {
+/*
+ =============================================================================================
+|      ___  ________   _________  _______   ________  _______   ________                      |
+|     |\  \|\   ___  \|\___   ___\\  ___ \ |\   ____\|\  ___ \ |\   __  \                     |
+|     \ \  \ \  \\ \  \|___ \  \_\ \   __/|\ \  \___|\ \   __/|\ \  \|\  \                    |
+|      \ \  \ \  \\ \  \   \ \  \ \ \  \_|/_\ \  \  __\ \  \_|/_\ \   _  _\                   |
+|       \ \  \ \  \\ \  \   \ \  \ \ \  \_|\ \ \  \|\  \ \  \_|\ \ \  \\  \|                  |
+|        \ \__\ \__\\ \__\   \ \__\ \ \_______\ \_______\ \_______\ \__\\ _\                  |
+|         \|__|\|__| \|__|    \|__|  \|_______|\|_______|\|_______|\|__|\|__|                 |
+|                                                                                             |
+|                                                                                             |
+|                                                                                             |
+|  ___  ___  ________   ___       ___  _____ ______   ___  _________  _______   ________      |
+| |\  \|\  \|\   ___  \|\  \     |\  \|\   _ \  _   \|\  \|\___   ___\\  ___ \ |\   ___ \     |
+| \ \  \\\  \ \  \\ \  \ \  \    \ \  \ \  \\\__\ \  \ \  \|___ \  \_\ \   __/|\ \  \_|\ \    |
+|  \ \  \\\  \ \  \\ \  \ \  \    \ \  \ \  \\|__| \  \ \  \   \ \  \ \ \  \_|/_\ \  \ \\ \   |
+|   \ \  \\\  \ \  \\ \  \ \  \____\ \  \ \  \    \ \  \ \  \   \ \  \ \ \  \_|\ \ \  \_\\ \  |
+|    \ \_______\ \__\\ \__\ \_______\ \__\ \__\    \ \__\ \__\   \ \__\ \ \_______\ \_______\ |
+|     \|_______|\|__| \|__|\|_______|\|__|\|__|     \|__|\|__|    \|__|  \|_______|\|_______| |
+|                                                                                             |
+ =============================================================================================                          
+ Integer Unlimited
+ Класс TUInt представляет из себя относительно новый тип данных, способный производить 
+ базовые арифметические операции с большими числами. Длина устанавливается самим разработчиком.
+
+ Базовая длина составляет 20 символов, что эквивалентно 2^64 значений.
+ Чтобы изменить количество символов, требуется изменить значение константы SIZE
+*/
+
+
+class TUInt {
 #define SIZE 20
 	char dArray[SIZE];
 	bool isNegative = false;
@@ -57,18 +88,18 @@ private:
 	}
 public:
 
-	int64()
+	TUInt()
 	{
 		initial();
 	}
 
-	int64(char c)
+	TUInt(char c)
 	{
 		initial();
 		dArray[0] = c;
 	}
 
-	int64(char c[])
+	TUInt(char c[])
 	{
 		int sLength = strlen(c);
 		initial();
@@ -84,7 +115,7 @@ public:
 		}
 	}
 
-	int64(int c)
+	TUInt(int c)
 	{
 		initial();
 
@@ -98,7 +129,7 @@ public:
 		}
 	}
 
-	int64(long c)
+	TUInt(long c)
 	{
 		initial();
 
@@ -112,7 +143,7 @@ public:
 		}
 	}
 
-	int64(long long c)
+	TUInt(long long c)
 	{
 		initial();
 
@@ -126,17 +157,17 @@ public:
 		}
 	}
 
-	int64 operator+(const int64 &c)
+	TUInt operator+(const TUInt &c)
 	{
-		int64 tResult;
+		TUInt tResult;
 		int tSumm = 0; // Временная сумма
 		int tRemndr; // Временный остаток
 		for (int i = 0; i < SIZE; i++)
 		{
 			// Складываем сумму текущего порядка и предыдущего
 			tSumm = (isNegative ? -1 : 1)*atoi(dArray[i]) + (c.isNegative ? -1 : 1)*atoi(c.dArray[i]) + tSumm;
-			tRemndr = tSumm % 10;
-			if (tRemndr < 0)
+			tRemndr = tSumm % 10; // Остаток от базы - последняя цифра
+			if (tRemndr < 0)//При отправке
 			{
 				tRemndr += 10;
 				tSumm -= 10;
@@ -146,9 +177,9 @@ public:
 		}
 		return tResult;
 	}
-	int64 operator-(const int64 &c)
+	TUInt operator-(const TUInt &c)
 	{
-		int64 tResult;
+		TUInt tResult;
 		int tSumm = 0;
 		int tRemndr;
 		for (int i = 0; i < SIZE; i++)
@@ -165,10 +196,10 @@ public:
 		}
 		return tResult;
 	}
-	int64 operator*(const int64 &c)
+	TUInt operator*(const TUInt &c)
 	{
-		int64 tSumm;
-		int64 tResult;
+		TUInt tSumm;
+		TUInt tResult;
 		int tRemndr_1 = 0; //остаток
 		int tRemndr_2 = 0; //остаток на разряд выше
 
@@ -190,17 +221,16 @@ public:
 		return tResult;
 	}
 
-	bool operator==(const int64 &c)
+	bool operator==(const TUInt &c)
 	{
 		for (int i = 0; i < SIZE; i++)
 			if (dArray[i] != c.dArray[i])
 				return false;
 		return true;
 	}
-	bool operator<(const int64 &c)
+	bool operator<(const TUInt &c)
 	{
-		int i = SIZE;
-		while (true)
+		for (int i = SIZE; i <= 0; i--)
 		{
 			if (atoi(dArray[i]) < atoi(c.dArray[i]))
 				if (*this == c) // для строгого условия
@@ -210,14 +240,11 @@ public:
 
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
 				return false;
-
-			i--;
 		}
 	}
-	bool operator>(const int64 &c)
+	bool operator>(const TUInt &c)
 	{
-		int i = SIZE;
-		while (true)
+		for(int i = SIZE; i <= 0; i--)
 		{
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
 				if (*this == c)
@@ -227,10 +254,9 @@ public:
 
 			if (atoi(dArray[i]) < atoi(c.dArray[i]))
 				return false;
-			i--;
 		}
 	}
-	bool operator<=(const int64 &c)
+	bool operator<=(const TUInt &c)
 	{
 		for (int i = SIZE; i >= 0; i--)
 		{
@@ -242,31 +268,32 @@ public:
 				return false;
 		}
 	}
-	bool operator>=(const int64 &c)
+	bool operator>=(const TUInt &c)
 	{
 		for (int i = SIZE; i >= 0; i--)
 		{
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
 				return true;
+
 			if (atoi(dArray[i]) < atoi(c.dArray[i]))
 				return false;
 		}
 	}
 
-	int64 operator/(int64 &c)
+	TUInt operator/(TUInt &c)
 	{
-		if (c == (int64)0)
+		if (c == (TUInt)0)
 		{
 			throw "DEVIDE BY ZERO";
 			return 0;
 		}
 
 		int i = SIZE;
-		int64 tResult;
-		int64 dividendPart;//Промежуточное произведение
-						   //работаем с модулями чисел
-		int64 divider(abs(c));// Делитель
-		int64 dividend(abs(*this));// Делимое
+		TUInt tResult;
+		TUInt dividendPart;//Промежуточное произведение
+		//работаем с модулями чисел
+		TUInt divider(abs(c));// Делитель
+		TUInt dividend(abs(*this));// Делимое
 
 		bool started = false;
 
@@ -296,22 +323,20 @@ public:
 		tResult.isNegative = (isNegative && c.isNegative) || (isNegative && !c.isNegative) || (!isNegative && c.isNegative);
 		return tResult;
 	}
-	int64 operator%(int64 &c)
+	TUInt operator%(TUInt &c)
 	{
-		if (c == (int64)0)
+		if (c == (TUInt)0)
 		{
 			throw "DEVIDE BY ZERO";
 			return 0;
 		}
 
-
-
 		int i = SIZE;
-		int64 tResult;
-		int64 dividendPart;//Промежуточное произведение
-						   //работаем с модулями чисел
-		int64 divider(abs(c));// Делитель
-		int64 dividend(abs(*this));// Делимое
+		TUInt tResult;
+		TUInt dividendPart;//Промежуточное произведение
+		//работаем с модулями чисел
+		TUInt divider(abs(c));// Делитель
+		TUInt dividend(abs(*this));// Делимое
 
 		bool started = false;
 
@@ -343,21 +368,21 @@ public:
 
 		return tResult;
 	}
-	int64 abs(const int64 &c)
+	TUInt abs(const TUInt &c)
 	{
-		int64 tResult(c);
+		TUInt tResult(c);
 		for (int i = 0; i < SIZE; i++)
 			if (tResult.dArray[i] == '-')
 				tResult.dArray[i] = '0';
 		tResult.isNegative = false;
 		return tResult;
 	}
-	friend ostream& operator<<(ostream& os, int64 &c);
+	friend ostream& operator<<(ostream& os, TUInt &c);
 };
-ostream& operator<<(ostream& os, int64 &c)
+ostream& operator<<(ostream& os, TUInt &c)
 {
 	bool trigger = false;
-	if (c.isNegative && !(c == (int64)0))
+	if (c.isNegative && !(c == (TUInt)0))
 		os << '-';
 	for (int i = 0; i < SIZE; i++)
 	{
@@ -375,8 +400,9 @@ ostream& operator<<(ostream& os, int64 &c)
 
 int main() {
 
-	int64 t = 25;
-	int64 j = 2;
+
+	TUInt t = 25;
+	TUInt j = 2;
 	cout << t << " % " << j << " = " << t % j << endl;
 	system("pause");
 	return 0;
