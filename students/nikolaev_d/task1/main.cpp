@@ -1,8 +1,9 @@
 #include <iostream>
+#include <locale>
 
 using namespace std;
 
-/*
+/*********************************************************************************************
  =============================================================================================
 |      ___  ________   _________  _______   ________  _______   ________                      |
 |     |\  \|\   ___  \|\___   ___\\  ___ \ |\   ____\|\  ___ \ |\   __  \                     |
@@ -11,8 +12,6 @@ using namespace std;
 |       \ \  \ \  \\ \  \   \ \  \ \ \  \_|\ \ \  \|\  \ \  \_|\ \ \  \\  \|                  |
 |        \ \__\ \__\\ \__\   \ \__\ \ \_______\ \_______\ \_______\ \__\\ _\                  |
 |         \|__|\|__| \|__|    \|__|  \|_______|\|_______|\|_______|\|__|\|__|                 |
-|                                                                                             |
-|                                                                                             |
 |                                                                                             |
 |  ___  ___  ________   ___       ___  _____ ______   ___  _________  _______   ________      |
 | |\  \|\  \|\   ___  \|\  \     |\  \|\   _ \  _   \|\  \|\___   ___\\  ___ \ |\   ___ \     |
@@ -25,17 +24,21 @@ using namespace std;
  =============================================================================================                          
  Integer Unlimited
  Класс TUInt представляет из себя относительно новый тип данных, способный производить 
- базовые арифметические операции с большими числами. Длина устанавливается самим разработчиком.
+ базовые арифметические операции с большими положительными числами. Длина устанавливается 
+ самим разработчиком.
 
  Базовая длина составляет 20 символов, что эквивалентно 2^64 значений.
  Чтобы изменить количество символов, требуется изменить значение константы SIZE
-*/
+
+ *********************************************************************************************/
 
 
 class TUInt {
-#define SIZE 20
+
+	#define SIZE 20
 	char dArray[SIZE];
 	bool isNegative = false;
+
 private:
 	void initial()
 	{
@@ -230,24 +233,26 @@ public:
 	}
 	bool operator<(const TUInt &c)
 	{
-		for (int i = SIZE; i <= 0; i--)
+	for (int i = SIZE; i >= 0; i--)
 		{
-			if (atoi(dArray[i]) < atoi(c.dArray[i]))
-				if (*this == c) // для строгого условия
-					return false;
-				else
-					return true;
-
+			//если элемент массива меньше , возвращает true
+		if (atoi(dArray[i]) < atoi(c.dArray[i]))
+			if (*this == (TUInt)c)
+				return false;
+			else
+				return true;
+			//если элемент массива больше , возвращает false
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
 				return false;
 		}
+		return false;
 	}
 	bool operator>(const TUInt &c)
 	{
 		for(int i = SIZE; i <= 0; i--)
 		{
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
-				if (*this == c)
+				if (*this == (TUInt)c)
 					return false;
 				else
 					return true;
@@ -255,6 +260,7 @@ public:
 			if (atoi(dArray[i]) < atoi(c.dArray[i]))
 				return false;
 		}
+		return false;
 	}
 	bool operator<=(const TUInt &c)
 	{
@@ -280,20 +286,20 @@ public:
 		}
 	}
 
-	TUInt operator/(TUInt &c)
+	TUInt operator/(const TUInt &c)
 	{
-		if (c == (TUInt)0)
+		int i = SIZE;
+		TUInt tResult;
+		TUInt dividendPart;//Промежуточное произведение
+						   //Работаем с модулями чисел
+		TUInt divider(abs(c));// Делитель
+		TUInt dividend(abs(*this));// Делимое
+
+		if (divider == (TUInt)0)
 		{
 			throw "DEVIDE BY ZERO";
 			return 0;
 		}
-
-		int i = SIZE;
-		TUInt tResult;
-		TUInt dividendPart;//Промежуточное произведение
-		//работаем с модулями чисел
-		TUInt divider(abs(c));// Делитель
-		TUInt dividend(abs(*this));// Делимое
 
 		bool started = false;
 
@@ -323,20 +329,20 @@ public:
 		tResult.isNegative = (isNegative && c.isNegative) || (isNegative && !c.isNegative) || (!isNegative && c.isNegative);
 		return tResult;
 	}
-	TUInt operator%(TUInt &c)
+	TUInt operator%(const TUInt &c)
 	{
-		if (c == (TUInt)0)
+		int i = SIZE;
+		TUInt tResult;
+		TUInt dividendPart;//Промежуточное произведение
+		//Работаем с модулями чисел
+		TUInt divider(abs(c));// Делитель
+		TUInt dividend(abs(*this));// Делимое
+
+		if (divider == (TUInt)0)
 		{
 			throw "DEVIDE BY ZERO";
 			return 0;
 		}
-
-		int i = SIZE;
-		TUInt tResult;
-		TUInt dividendPart;//Промежуточное произведение
-		//работаем с модулями чисел
-		TUInt divider(abs(c));// Делитель
-		TUInt dividend(abs(*this));// Делимое
 
 		bool started = false;
 
@@ -378,6 +384,7 @@ public:
 		return tResult;
 	}
 	friend ostream& operator<<(ostream& os, TUInt &c);
+	//friend ostream& operator>>(ostream& os, TUInt &c);
 };
 ostream& operator<<(ostream& os, TUInt &c)
 {
@@ -399,11 +406,47 @@ ostream& operator<<(ostream& os, TUInt &c)
 }
 
 int main() {
+	setlocale(LC_ALL, "Russian");
+	
+	TUInt i = 25;
+	TUInt j = 5;
 
+	cout << "Обычные числа: " << endl;
+	cout << i << " + " << j << " = " << i + j << endl;
+	cout << i << " - " << j << " = " << i - j << endl;
+	cout << i << " * " << j << " = " << i * j << endl;
+	cout << i << " / " << j << " = " << i / j << endl;
+	cout << i << " % " << j << " = " << i % j << endl;
+	cout << endl;
 
-	TUInt t = 25;
-	TUInt j = 2;
-	cout << t << " % " << j << " = " << t % j << endl;
+	i = "98219407219253";
+	j = 2891;
+
+	cout << "Длинные числа: " << endl;
+	cout << i << " + " << j << " = " << i + j << endl;
+	cout << i << " - " << j << " = " << i - j << endl;
+	cout << i << " * " << j << " = " << i * j << endl;
+	cout << i << " / " << j << " = " << i / j << endl;
+	cout << i << " % " << j << " = " << i % j << endl;
+	cout << endl;
+
+	i = "10";
+	j = 10;
+
+	cout << "Сравнения чисел: " << endl;
+	cout << i << " < " << j << " = " << (i < j ? "true" : "false") << endl;
+	cout << i << " <= " << j << " = " << (i <= j ? "true" : "false") << endl;
+	cout << i << " > " << j << " = " << (i > j ? "true" : "false") << endl;
+	cout << i << " >= " << j << " = " << (i >= j ? "true" : "false") << endl;
+	cout << endl;
+
+	i = "2382194072192535";
+	j = "9821940721925309";
+
+	cout << i << " < " << j << " = " << (i < j ? "true" : "false") << endl;
+	cout << i << " <= " << j << " = " << (i <= j ? "true" : "false") << endl;
+	cout << i << " > " << j << " = " << (i > j ? "true" : "false") << endl;
+	cout << i << " >= " << j << " = " << (i >= j ? "true" : "false") << endl;
 	system("pause");
 	return 0;
 }
