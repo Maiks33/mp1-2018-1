@@ -1,12 +1,12 @@
-#define _CRT_SECURE_NO_WARNINGS
+п»ї#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <math.h>
 
 using namespace std;
 
-void Vlogenie(int &hor, int &min, int &sec)//ввод данных
+void Vlogenie(int &hor, int &min, int &sec)//РІРІРѕРґ РґР°РЅРЅС‹С…
 {
-	cout << "Введите ЧЧ : ММ: СС " << endl;
+	cout << "Р’РІРµРґРёС‚Рµ Р§Р§ : РњРњ: РЎРЎ " << endl;
 	cin >> hor;cout << ":";cin >> min;cout << ":";cin >> sec;
 }
 
@@ -15,7 +15,7 @@ class Time
 {
 private:
 	int hor, min, sec;
-	void time()//оптимизация переменных
+	void time()//РѕРїС‚РёРјРёР·Р°С†РёСЏ РїРµСЂРµРјРµРЅРЅС‹С…
 	{
 		if (sec > 59)
 		{
@@ -36,19 +36,19 @@ private:
 		}
 	}
 public:
-	//конструктор
+	//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	void ConstructTime(int _hor, int _min, int _sec)
 	{
 		int hor(_hor);
 		int min(_min);
 		int sec(_sec);
 	}
-	//Вывод на экран
+	//Р’С‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
 	void ShowTime()
 	{
 		cout << hor << " : " << min << " : " << sec << endl;
 	}
-	//Оператор присваивания
+	//РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
 	Time operator = (const Time obj)
 	{
 		hor = obj.hor;
@@ -56,7 +56,7 @@ public:
 		sec = obj.sec;
 		return *this;
 	}
-	//сдвиг времени в меньшую сторону
+	//СЃРґРІРёРі РІСЂРµРјРµРЅРё РІ РјРµРЅСЊС€СѓСЋ СЃС‚РѕСЂРѕРЅСѓ
 	Time operator - (Time t2)
 	{
 		int sec_ = sec - t2.sec;
@@ -70,7 +70,7 @@ public:
 		hor_--;
 		return *this;
 	}
-	//Сдвиг времени в большую сторону
+	//РЎРґРІРёРі РІСЂРµРјРµРЅРё РІ Р±РѕР»СЊС€СѓСЋ СЃС‚РѕСЂРѕРЅСѓ
 	Time operator + (Time t2)
 	{
 		int sec_ = sec + t2.sec;
@@ -86,7 +86,7 @@ public:
 			hor_ = hor_ - 23;
 		return *this;
 	}
-	//Разница между заданными временами
+	//Р Р°Р·РЅРёС†Р° РјРµР¶РґСѓ Р·Р°РґР°РЅРЅС‹РјРё РІСЂРµРјРµРЅР°РјРё
 	/*Time Raznica(Time t1,Time t2,Time t3)
 	{
 	int choice;
@@ -95,11 +95,11 @@ public:
 	t3 = t1 - t2;
 	if (t1.hor < t2.hor)
 	t3 = t2 - t1;
-	cout << "Разница в чем:" << endl;
-	cout << "1-в часах" << endl;
-	cout << "2-в минутах" << endl;
-	cout << "3-в секундах" << endl;
-	cout << "4-просто вывести" << endl;
+	cout << "Р Р°Р·РЅРёС†Р° РІ С‡РµРј:" << endl;
+	cout << "1-РІ С‡Р°СЃР°С…" << endl;
+	cout << "2-РІ РјРёРЅСѓС‚Р°С…" << endl;
+	cout << "3-РІ СЃРµРєСѓРЅРґР°С…" << endl;
+	cout << "4-РїСЂРѕСЃС‚Рѕ РІС‹РІРµСЃС‚Рё" << endl;
 	cin >> choice;
 	switch (choice)
 	{
@@ -107,18 +107,18 @@ public:
 	t3.hor = t3.hor;
 	t3.min = 0;
 	t3.sec = 0;
-	cout << "Время в часах :" << t3.hor << endl;
+	cout << "Р’СЂРµРјСЏ РІ С‡Р°СЃР°С… :" << t3.hor << endl;
 	case 2:
 	t3.min = t3.min + 60 * t3.hor;
 	t3.hor = 0;
 	t3.sec = 0;
-	cout << "Время в минутах :" << t3.min << endl;
+	cout << "Р’СЂРµРјСЏ РІ РјРёРЅСѓС‚Р°С… :" << t3.min << endl;
 	case 3:
 	t3.min = t3.min + 60 * t3.hor;
 	t3.sec = t3.sec + 60 * t3.min;
 	t3.hor = 0;
 	t3.min = 0;
-	cout << "Время в секундах :" << t3.sec << endl;
+	cout << "Р’СЂРµРјСЏ РІ СЃРµРєСѓРЅРґР°С… :" << t3.sec << endl;
 	case 4:
 	t3.ShowTime();
 	}
@@ -135,8 +135,8 @@ int main()
 	Time time2;
 	Time time3;
 	time3.ConstructTime(hor, min, sec);
-	cout << "Желаете задать время?" << endl;
-in:		cout << "1-Да,2-Нет" << endl;
+	cout << "Р–РµР»Р°РµС‚Рµ Р·Р°РґР°С‚СЊ РІСЂРµРјСЏ?" << endl;
+in:		cout << "1-Р”Р°,2-РќРµС‚" << endl;
 	cin >> choice;
 	if (choice == 1)
 	{
@@ -149,12 +149,12 @@ in:		cout << "1-Да,2-Нет" << endl;
 	if (choice != 0)
 		goto in;
 	choice = 0;
-	cout << "Какие операции хотите сделать" << endl;
-	cout << "1-сдвинуть время,2-вычислить разницу,3-выход" << endl;
+	cout << "РљР°РєРёРµ РѕРїРµСЂР°С†РёРё С…РѕС‚РёС‚Рµ СЃРґРµР»Р°С‚СЊ" << endl;
+	cout << "1-СЃРґРІРёРЅСѓС‚СЊ РІСЂРµРјСЏ,2-РІС‹С‡РёСЃР»РёС‚СЊ СЂР°Р·РЅРёС†Сѓ,3-РІС‹С…РѕРґ" << endl;
 	cin >> choice;
 	if (choice == 1)
 	{
-		cout << "В большую сторону-1,в меньшую сторону-2" << endl;
+		cout << "Р’ Р±РѕР»СЊС€СѓСЋ СЃС‚РѕСЂРѕРЅСѓ-1,РІ РјРµРЅСЊС€СѓСЋ СЃС‚РѕСЂРѕРЅСѓ-2" << endl;
 		cin >> change;
 		if (change == 1)
 			Vlogenie(hor, min, sec);
