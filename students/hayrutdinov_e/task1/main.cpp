@@ -29,23 +29,23 @@ public:
 	}
 	double GetArshin()
 	{
-		return metre*0.7112;
+		return metre*1.41;
 	}
 	double GetFoot()
 	{
-		return metre*0.3048;
+		return metre*3.28;
 	}
 	double GetYard()
 	{
-		return metre*0.9144;
+		return metre*1.0936;
 	}
 	double GetSazhen()
 	{
-		return metre*2.1336;
+		return metre*0.47;
 	}
 	double GetPyad()
 	{
-		return metre*0.1778;
+		return metre*5.62;
 	}
 	double GetInch()
 	{
@@ -53,7 +53,7 @@ public:
 	}
 	double GetMile()
 	{
-		return metre*1609.34;
+		return metre*0.00062;
 	}
 
 	void SetMetre(int met)
