@@ -60,7 +60,7 @@ public:
 		return *this;
 	}
 	//сдвиг времени в меньшую сторону
-	Time operator - (Time t2)
+	Time operator - (const Time& t2)
 	{
 		int sec_ = sec - t2.sec;
 		int min_ = min - t2.min;
@@ -75,7 +75,7 @@ public:
 			hor_ = 24 - hor_ % 24;
 	}
 	//Сдвиг времени в большую сторону
-	Time operator + (Time t2)
+	Time operator + (const Time& t2)
 	{
 		int sec_ = sec + t2.sec;
 		int min_ = min + t2.min;
