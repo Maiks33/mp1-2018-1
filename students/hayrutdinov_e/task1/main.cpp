@@ -108,33 +108,36 @@ public:
 void main()
 {
 	double _m = 0;
-	int a, b, c = 1;
+	int a, b, c = 1, f = 1;
 	ConverterLength K;
-	while (c == 1)
+menu: while (c == 1)
+{
+	cout << "Select section:" << "\n" << "1 - Set lenght in meters" << "\n" << "2 - Get lenght in metres" << "\n" << "3 - Get length in other values" << "\n" << "4 - Exit" << "\n";
+	cin >> a;
+	switch (a)
 	{
-		cout << "Select section:" << "\n" << "1 - Set lenght in meters" << "\n" << "2 - Get lenght in metres" << "\n" << "3 - Get length in other values" << "\n" << "4 - Exit" << "\n";
-		cin >> a;
-		switch (a)
+	case 1:
+	{
+		cout << "Length in metres =";
+		cin >> _m;
+		K.SetMetre(_m);
+		system("pause");
+		system("cls");
+		break;
+	}
+	case 2:
+	{
+		K.Metre();
+		system("pause");
+		system("cls");
+		break;
+	}
+	case 3:
+	{
+		while (f == 1)
 		{
-		case 1:
-		{
-			cout << "Length in metres =";
-			cin >> _m;
-			K.SetMetre(_m);
-			system("pause");
-			system("cls");
-			break;
-		}
-		case 2:
-		{
-			K.Metre();
-			system("pause");
-			system("cls");
-			break;
-		}
-		case 3:
-			cout << "Select value:" << "\n" << "1 - Arshin\n" << "2 - Foot\n" << "3 - Yard\n" << "4 - Sazhen\n" << "5 - Pyad\n" << "6 - Inch\n" << "7 - Mile\n" << "8 - All Values;
-				cin >> b;
+			cout << "Select value:" << "\n" << "1 - Arshin\n" << "2 - Foot\n" << "3 - Yard\n" << "4 - Sazhen\n" << "5 - Pyad\n" << "6 - Inch\n" << "7 - Mile\n" << "8 - All Values\n" << "9 - Back to menu\n";;
+			cin >> b;
 			switch (b)
 			{
 			case 1:
@@ -189,18 +192,24 @@ void main()
 			case 8:
 			{
 				K.SeeAllLength();
-				K.Mile();
 				system("pause");
 				system("cls");
 				break;
 			}
+			case 9:
+			{
+				system("cls");
+				goto menu;
 			}
-		case 4:
-		{
-			c = 0;
-		}
+			}
 		}
 	}
-	system("pause");
+	case 4:
+	{
+		c = 0;
+	}
+	}
+}
+	  system("pause");
 
 }
