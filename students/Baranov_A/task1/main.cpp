@@ -20,37 +20,39 @@ private:
 	{
 		if (sec > 59)
 		{
-			while (sec >= 60)
-				min++;
-			sec -= 60;
+			min = min + sec / 60;
+			sec = sec % 60;
 		}
-		if (min >= 59)
+		if (min > 59)
 		{
-			while (min >= 60)
-				hor++;
-			min -= 60;
+			hor = hor + min / 60;
+			min = min % 60;
 		}
-		if (hor >= 23)
+		if (hor > 23)
 		{
-			while (hor >= 23)
-				hor = hor - 23;
+			hor = hor % 24;
 		}
 	}
 public:
 	//конструктор
-	void ConstructTime(int _hor, int _min, int _sec)
+	Time(int _hor, int _min, int _sec)
 	{
-		int hor(_hor);
-		int min(_min);
-		int sec(_sec);
+		setTime(_hor, _min, _sec);
 	}
 	//Вывод на экран
 	void ShowTime()
 	{
 		cout << hor << " : " << min << " : " << sec << endl;
 	}
+	//Установка времени
+	void setTime(int _hor, int _min, int _sec)
+	{
+		hor = _hor;
+		min = _min;
+		sec = _sec;
+	}
 	//Оператор присваивания
-	Time operator = (const Time obj)
+	Time operator = (const Time& obj)
 	{
 		hor = obj.hor;
 		min = obj.min;
@@ -64,12 +66,13 @@ public:
 		int min_ = min - t2.min;
 		int hor_ = hor - t2.hor;
 		if (sec_ < 0)
-			sec_ = 60 + sec_;
-		min_--;
+			sec_ = 60 - sec_ % 60;
+		min_ = min_ - (1 + abs(sec / 60));
 		if (min_ < 0)
-			min_ = 60 + min_;
-		hor_--;
-		return *this;
+			min_ = 60 - min_ % 60;
+		hor_ = hor_ - (1 + abs(min / 60));
+		if (hor_ < 0)
+			hor_ = 24 - hor_ % 24;
 	}
 	//Сдвиг времени в большую сторону
 	Time operator + (Time t2)
@@ -77,54 +80,21 @@ public:
 		int sec_ = sec + t2.sec;
 		int min_ = min + t2.min;
 		int hor_ = hor + t2.hor;
-		if (sec_ > 59)
-			sec_ = sec_ - 60;
-		min_++;
-		if (min_ > 59)
-			min_ = min_ - 60;
-		hor_++;
-		if (hor_ > 23)
-			hor_ = hor_ - 23;
-		return *this;
+		if (sec > 59)
+		{
+			min = min + sec / 60;
+			sec = sec % 60;
+		}
+		if (min > 59)
+		{
+			hor = hor + min / 60;
+			min = min % 60;
+		}
+		if (hor > 23)
+		{
+			hor = hor % 24;
+		}
 	}
-	//Разница между заданными временами
-	/*Time Raznica(Time t1,Time t2,Time t3)
-	{
-	int choice;
-
-	if (t1.hor > t2.hor)
-	t3 = t1 - t2;
-	if (t1.hor < t2.hor)
-	t3 = t2 - t1;
-	cout << "Разница в чем:" << endl;
-	cout << "1-в часах" << endl;
-	cout << "2-в минутах" << endl;
-	cout << "3-в секундах" << endl;
-	cout << "4-просто вывести" << endl;
-	cin >> choice;
-	switch (choice)
-	{
-	case 1:
-	t3.hor = t3.hor;
-	t3.min = 0;
-	t3.sec = 0;
-	cout << "Время в часах :" << t3.hor << endl;
-	case 2:
-	t3.min = t3.min + 60 * t3.hor;
-	t3.hor = 0;
-	t3.sec = 0;
-	cout << "Время в минутах :" << t3.min << endl;
-	case 3:
-	t3.min = t3.min + 60 * t3.hor;
-	t3.sec = t3.sec + 60 * t3.min;
-	t3.hor = 0;
-	t3.min = 0;
-	cout << "Время в секундах :" << t3.sec << endl;
-	case 4:
-	t3.ShowTime();
-	}
-	return *this;
-	}*/
 };
 int main()
 {
@@ -135,15 +105,15 @@ int main()
 	Time T;
 	Time time2;
 	Time time3;
-	time3.ConstructTime(hor, min, sec);
 	cout << "Желаете задать время?" << endl;
 in:		cout << "1-Да,2-Нет" << endl;
 	cin >> choice;
 	if (choice == 1)
 	{
 		Vlogenie(hor, min, sec);
-		T.ConstructTime(hor, min, sec);
+		T.setTime(hor, min, sec);
 		T.ShowTime();
+		cout << T.ShowTime() << endl;
 		system("pause");
 		system("cls");
 	}
@@ -159,18 +129,24 @@ in:		cout << "1-Да,2-Нет" << endl;
 		cin >> change;
 		if (change == 1)
 			Vlogenie(hor, min, sec);
-		time2.ConstructTime(hor, min, sec);
+		time2.setTime(hor, min, sec);
 		T = T + time2;
+		T.ShowTime();
+		cout << T.ShowTime << endl;
 		if (change == 2)
 			Vlogenie(hor, min, sec);
-		time2.ConstructTime(hor, min, sec);
+		time2.setTime(hor, min, sec);
 		T = T - time2;
+		T.ShowTime();
+		cout << T.ShowTime << endl;
 	}
 	if (choice == 2)
+		//Разница будет операций в главной функции,а не методом класса
 		Vlogenie(hor, min, sec);
-	time2.ConstructTime(hor, min, sec);
+	time2.setTime(hor, min, sec);
 	time3 = T - time2;
 	time3.ShowTime();
+	cout << time3.ShowTime << endl;
 	if (choice == 3)
 		return 0;
 }
