@@ -18,7 +18,7 @@ public:
 		metre = m;
 		return *this;
 	}
-	ConverterLength& operator=(const ConverterLength&length)
+	ConverterLength& operator=(const ConverterLength& length)
 	{
 		metre = length.metre;
 		return *this;
@@ -62,46 +62,46 @@ public:
 	}
 	void Metre()
 	{
-		cout << "Lenght in metres =" << GetMetre() << "\n";
+		cout << "Length in metres =" << GetMetre() << "\n";
 	}
 	void Arshin()
 	{
-		cout << "Lenght in arshin`s =" << GetArshin() << "\n";
+		cout << "Length in arshin`s =" << GetArshin() << "\n";
 	}
 	void Foot()
 	{
-		cout << "Lenght in foot =" << GetFoot() << "\n";
+		cout << "Length in foot =" << GetFoot() << "\n";
 	}
 	void Yard()
 	{
-		cout << "Lenght in yard =" << GetYard() << "\n";
+		cout << "Length in yard =" << GetYard() << "\n";
 	}
 	void Sazhen()
 	{
-		cout << "Lenght in sazhen`s =" << GetSazhen() << "\n";
+		cout << "Length in sazhen`s =" << GetSazhen() << "\n";
 	}
 	void Pyad()
 	{
-		cout << "Lenght in pyad =" << GetPyad() << "\n";
+		cout << "Length in pyad =" << GetPyad() << "\n";
 	}
 	void Inch()
 	{
-		cout << "Lenght in Inch =" << GetInch() << "\n";
+		cout << "Length in Inch =" << GetInch() << "\n";
 	}
 	void Mile()
 	{
-		cout << "Lenght in mile =" << GetMile() << "\n";
+		cout << "Length in mile =" << GetMile() << "\n";
 	}
-	void SeeAllLenght()
+	void SeeAllLength()
 	{
-		cout << "Lenght in metres =" << GetMetre() << "\n";
-		cout << "Lenght in arshin`s =" << GetArshin() << "\n";
-		cout << "Lenght in foot =" << GetFoot() << "\n";
-		cout << "Lenght in yard =" << GetYard() << "\n";
-		cout << "Lenght in sazhen`s =" << GetSazhen() << "\n";
-		cout << "Lenght in pyad =" << GetPyad() << "\n";
-		cout << "Lenght in inch =" << GetInch() << "\n";
-		cout << "Lenght in mile =" << GetMile() << "\n";
+		cout << "Length in metres =" << GetMetre() << "\n";
+		cout << "Length in arshin`s =" << GetArshin() << "\n";
+		cout << "Length in foot =" << GetFoot() << "\n";
+		cout << "Length in yard =" << GetYard() << "\n";
+		cout << "Length in sazhen`s =" << GetSazhen() << "\n";
+		cout << "Length in pyad =" << GetPyad() << "\n";
+		cout << "Length in inch =" << GetInch() << "\n";
+		cout << "Length in mile =" << GetMile() << "\n";
 	}
 };
 
@@ -112,13 +112,13 @@ void main()
 	ConverterLength K;
 	while (c == 1)
 	{
-		cout << "Select section:" << "\n" << "1 - Set lenght in meters" << "\n" << "2 - Get lenght in metres" << "\n" << "3 - Get length in all values" << "\n" << "4 - Exit" << "\n";
+		cout << "Select section:" << "\n" << "1 - Set lenght in meters" << "\n" << "2 - Get lenght in metres" << "\n" << "3 - Get length in other values" << "\n" << "4 - Exit" << "\n";
 		cin >> a;
 		switch (a)
 		{
 		case 1:
 		{
-			cout << "Lenght in metres =";
+			cout << "Length in metres =";
 			cin >> _m;
 			K.SetMetre(_m);
 			system("pause");
@@ -133,8 +133,8 @@ void main()
 			break;
 		}
 		case 3:
-			cout << "Select value:" << "\n" << "1 - Arshin\n" << "2 - Foot\n" << "3 - Yard\n" << "4 - Sazhen\n" << "5 - Pyad\n" << "6 - Inch\n" << "7 - mile\n";
-			cin >> b;
+			cout << "Select value:" << "\n" << "1 - Arshin\n" << "2 - Foot\n" << "3 - Yard\n" << "4 - Sazhen\n" << "5 - Pyad\n" << "6 - Inch\n" << "7 - Mile\n" << "8 - All Values;
+				cin >> b;
 			switch (b)
 			{
 			case 1:
@@ -181,6 +181,14 @@ void main()
 			}
 			case 7:
 			{
+				K.Mile();
+				system("pause");
+				system("cls");
+				break;
+			}
+			case 8:
+			{
+				K.SeeAllLength();
 				K.Mile();
 				system("pause");
 				system("cls");
