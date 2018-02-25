@@ -69,7 +69,7 @@ double LengthConverter::ConvertTo(int param)
 		case 1: return meters * 3.28084;
 		case 2: return meters * 1.09361;
 		case 3: return meters * 1.4060742407;
-		case 4: return meters * 0, 546807;
+		case 4: return meters * 0.546807;
 	}
 
 }
