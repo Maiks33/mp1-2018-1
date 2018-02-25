@@ -1,13 +1,13 @@
-п»ї#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
 
 using namespace std;
 
-void Vlogenie(int &hor, int &min, int &sec)//РІРІРѕРґ РґР°РЅРЅС‹С…
+void Vlogenie(int &hor, int &min, int &sec)//ввод данных
 {
-	cout << "Р’РІРµРґРёС‚Рµ Р§Р§ : РњРњ: РЎРЎ " << endl;
+	cout << "Введите ЧЧ : ММ: СС " << endl;
 	cin >> hor;cin >> min;cin >> sec;
 }
 
@@ -18,7 +18,7 @@ private:
 	int hor, min, sec;
 
 public:
-	//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+	//конструктор
 	Time(int _hor = 0, int _min = 0, int _sec = 0) :hor(_hor), min(_min), sec(_sec) {}
 	void setTime(int _hor, int _min, int _sec)
 	{
@@ -26,12 +26,12 @@ public:
 		min = _min;
 		sec = _sec;
 	}
-	//Р’С‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
+	//Вывод на экран
 	void ShowTime()
 	{
 		cout << hor << " : " << min << " : " << sec << endl;
 	}
-	//РћРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
+	//Оператор присваивания
 	Time operator = (const Time& obj)
 	{
 		hor = obj.hor;
@@ -39,7 +39,7 @@ public:
 		sec = obj.sec;
 		return *this;
 	}
-	//РЎРґРІРёРі РІСЂРµРјРµРЅРё 
+	//Сдвиг времени 
 	void Change(int _hor, int _min, int _sec, int change)
 	{
 		if (change == 1)
@@ -81,7 +81,7 @@ public:
 		if (hor < 0)
 			hor = 24 + hor % 24;
 	}
-	//Р Р°Р·РЅРёС†Р°
+	//Разница
 	void Raznica(int hor2, int min2, int sec2)
 	{
 		int Secfirst;
@@ -104,8 +104,8 @@ int main()
 	int sec = 0;
 	Time T;
 	system("chcp 1251>nul");
-	cout << "Р–РµР»Р°РµС‚Рµ Р·Р°РґР°С‚СЊ РІСЂРµРјСЏ?" << endl;
-in:		cout << "1-Р”Р°,2-РќРµС‚" << endl;
+	cout << "Желаете задать время?" << endl;
+in:		cout << "1-Да,2-Нет" << endl;
 	cin >> choice;
 	if (choice == 1)
 	{
@@ -117,12 +117,12 @@ in:		cout << "1-Р”Р°,2-РќРµС‚" << endl;
 	if (choice != 1)
 		goto in;
 	choice = 0;
-	cout << "РљР°РєРёРµ РѕРїРµСЂР°С†РёРё С…РѕС‚РёС‚Рµ СЃРґРµР»Р°С‚СЊ" << endl;
-	cout << "1-СЃРґРІРёРЅСѓС‚СЊ РІСЂРµРјСЏ,2-РІС‹С‡РёСЃР»РёС‚СЊ СЂР°Р·РЅРёС†Сѓ,3-РІС‹С…РѕРґ" << endl;
+	cout << "Какие операции хотите сделать" << endl;
+	cout << "1-сдвинуть время,2-вычислить разницу,3-выход" << endl;
 	cin >> choice;
 	if (choice == 1)
 	{
-		cout << "Р’ Р±РѕР»СЊС€СѓСЋ СЃС‚РѕСЂРѕРЅСѓ-1,РІ РјРµРЅСЊС€СѓСЋ СЃС‚РѕСЂРѕРЅСѓ-2" << endl;
+		cout << "В большую сторону-1,в меньшую сторону-2" << endl;
 		cin >> change;
 		Vlogenie(hor, min, sec);
 		T.Change(hor, min, sec, change);
