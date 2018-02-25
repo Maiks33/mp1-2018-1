@@ -32,9 +32,10 @@ public:
 	const int SAZHEN = 4;
 	double ConvertTo(int MeraType);
 
-	double GetLenght();
+	double GetLength();
 	void SetLength(double m);
 	
+	void ToConsole(int MeraType);
 	void ToConsole();
 };
 
@@ -47,7 +48,7 @@ LengthConverter::LengthConverter(int m)
 		meters = -1;
 }
 
-double LengthConverter::GetLenght()
+double LengthConverter::GetLength()
 {
 	return meters;
 }
@@ -81,6 +82,12 @@ void LengthConverter::ToConsole()
 	cout << "\n\tSazhen: " << ConvertTo(SAZHEN);
 }
 
+//Добавил новый вывод в консоль
+void LengthConverter::ToConsole(int param)
+{
+	cout << ConvertTo(param);
+}
+
 int main()
 {
 	LengthConverter a(5);
@@ -93,7 +100,7 @@ int main()
 	i[1] = b.ConvertTo(b.YARD);
 	i[2] = b.ConvertTo(b.SAZHEN);
 	i[3] = b.ConvertTo(b.FOOT);
-	i[4] = b.GetLenght();
+	i[4] = b.GetLength();
 
 	cout << "Object b:\n{\n";
 	for (int j = 0; j < 5; j++)
@@ -103,6 +110,10 @@ int main()
 
 	cout << "}\nObject a:\n{\n";
 	a.ToConsole();
+
+	cout << "\n";
+
+	a.ToConsole(a.ARSHIN);
 
 	cout << "\n}\n";
 	system("pause");
