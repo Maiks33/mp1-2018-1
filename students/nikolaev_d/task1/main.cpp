@@ -435,8 +435,8 @@ ostream& operator<<(ostream& os, TUInt &c)
 int main() {
 	setlocale(LC_ALL, "Russian");
 
-	TUInt i = "5";
-	TUInt j = "5";
+	TUInt i = "-25";
+	TUInt j = "-5";
 
 	cout << "Обычные числа: " << endl;
 	cout << i << " + " << j << " = " << i + j << endl;
