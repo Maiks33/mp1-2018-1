@@ -1,9 +1,10 @@
-п»ї#include <iostream>
+#include <iostream>
 #include <locale>
 
 using namespace std;
 
 /*********************************************************************************************
+
  =============================================================================================
 |      ___  ________   _________  _______   ________  _______   ________                      |
 |     |\  \|\   ___  \|\___   ___\\  ___ \ |\   ____\|\  ___ \ |\   __  \                     |
@@ -21,23 +22,27 @@ using namespace std;
 |    \ \_______\ \__\\ \__\ \_______\ \__\ \__\    \ \__\ \__\   \ \__\ \ \_______\ \_______\ |
 |     \|_______|\|__| \|__|\|_______|\|__|\|__|     \|__|\|__|    \|__|  \|_______|\|_______| |
 |                                                                                             |
- =============================================================================================                          
- Integer Unlimited
- РљР»Р°СЃСЃ TUInt РїСЂРµРґСЃС‚Р°РІР»СЏРµС‚ РёР· СЃРµР±СЏ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РЅРѕРІС‹Р№ С‚РёРї РґР°РЅРЅС‹С…, СЃРїРѕСЃРѕР±РЅС‹Р№ РїСЂРѕРёР·РІРѕРґРёС‚СЊ 
- Р±Р°Р·РѕРІС‹Рµ Р°СЂРёС„РјРµС‚РёС‡РµСЃРєРёРµ РѕРїРµСЂР°С†РёРё СЃ Р±РѕР»СЊС€РёРјРё РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹РјРё С‡РёСЃР»Р°РјРё. Р”Р»РёРЅР° СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ 
- СЃР°РјРёРј СЂР°Р·СЂР°Р±РѕС‚С‡РёРєРѕРј.
+ =============================================================================================
+| Integer Unlimited                                                                           |
+|                                                                                             |
+| Класс TUInt представляет из себя относительно новый тип данных, способный производить       |
+| базовые арифметические операции с большими положительными числами. Длина устанавливается    |
+| самим разработчиком.                                                                        |
+|                                                                                             |
+| Базовая длина составляет 20 символов, что вмещает 2^64 значений.                            |
+| В данном примере длина составляет 50 символов, что вмещает более 2^163 значений             |
+|                                                                                             |
+| Чтобы изменить количество символов, требуется изменить значение константы SIZE              |
+|                                                                                             |
+ =============================================================================================
 
- Р‘Р°Р·РѕРІР°СЏ РґР»РёРЅР° СЃРѕСЃС‚Р°РІР»СЏРµС‚ 20 СЃРёРјРІРѕР»РѕРІ, С‡С‚Рѕ СЌРєРІРёРІР°Р»РµРЅС‚РЅРѕ 2^64 Р·РЅР°С‡РµРЅРёР№.
- Р§С‚РѕР±С‹ РёР·РјРµРЅРёС‚СЊ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃРёРјРІРѕР»РѕРІ, С‚СЂРµР±СѓРµС‚СЃСЏ РёР·РјРµРЅРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ РєРѕРЅСЃС‚Р°РЅС‚С‹ SIZE
-
- UTF8 Code 2
 
  *********************************************************************************************/
 
 
 class TUInt {
 
-	#define SIZE 20
+#define SIZE 50
 	char dArray[SIZE];
 	bool isNegative = false;
 
@@ -47,7 +52,7 @@ private:
 		for (char i = 0; i < SIZE; i++)
 			dArray[i] = '0';
 	}
-	//РџСЂРµРѕР±СЂР°Р·СѓРµС‚ СЃРёРјРІРѕР» РІ С†РёС„СЂСѓ
+	//Преобразует символ в цифру
 	int atoi(char t)
 	{
 		switch (t)
@@ -65,7 +70,7 @@ private:
 		default: return 0;
 		}
 	}
-	//РџСЂРµРѕР±СЂР°Р·СѓРµС‚ С†РёС„СЂСѓ РІ СЃРёРјРІРѕР»
+	//Преобразует цифру в символ
 	char untoi(int t)
 	{
 		switch (t)
@@ -101,7 +106,7 @@ public:
 	TUInt(char c)
 	{
 		initial();
-		dArray[0] = c;
+		dArray[0] = untoi(atoi(c));
 	}
 
 	TUInt(char c[])
@@ -113,9 +118,13 @@ public:
 		{
 			for (int i = 0, j = sLength - 1; i < SIZE && c[j] != '\0'; i++, j--)
 			{
-				if (c[j] == '-')
-					isNegative = true;
 				dArray[i] = c[j];
+				if (c[j] == '-')
+				{
+					isNegative = true;
+					dArray[i] = '0';
+				}
+				
 			}
 		}
 	}
@@ -125,7 +134,11 @@ public:
 		initial();
 
 		if (c < 0)
+		{
 			isNegative = true;
+			c *= -1;
+		}
+			
 
 		for (int i = 0; i < SIZE; i++)
 		{
@@ -139,7 +152,10 @@ public:
 		initial();
 
 		if (c < 0)
+		{
 			isNegative = true;
+			c *= -1;
+		}
 
 		for (int i = 0; i < SIZE; i++)
 		{
@@ -153,7 +169,10 @@ public:
 		initial();
 
 		if (c < 0)
+		{
 			isNegative = true;
+			c *= -1;
+		}
 
 		for (int i = 0; i < SIZE; i++)
 		{
@@ -165,14 +184,38 @@ public:
 	TUInt operator+(const TUInt &c)
 	{
 		TUInt tResult;
-		int tSumm = 0; // Р’СЂРµРјРµРЅРЅР°СЏ СЃСѓРјРјР°
-		int tRemndr; // Р’СЂРµРјРµРЅРЅС‹Р№ РѕСЃС‚Р°С‚РѕРє
+		TUInt tTerm_1(*this);
+		TUInt tTerm_2(c);
+		int tSumm = 0; // Временная сумма
+		int tRemndr; // Временный остаток
+		bool NegativeResult = false;
+		if (isNegative || c.isNegative)
+		{
+			if (tTerm_1.isNegative && tTerm_2 > 0 && Abs(tTerm_1)  > Abs(tTerm_2))
+			{
+				NegativeResult = true;
+				tTerm_1.isNegative = false;
+				tTerm_2.isNegative = true;
+			}
+			else if (tTerm_1 > 0 && tTerm_2.isNegative && Abs(tTerm_1) < Abs(tTerm_2))
+			{
+				NegativeResult = true;
+				tTerm_1.isNegative = true;
+				tTerm_2.isNegative = false;
+			}
+			else if (tTerm_1.isNegative && tTerm_2.isNegative)
+			{
+				NegativeResult = true;
+				tTerm_1.isNegative = false;
+				tTerm_2.isNegative = false;
+			}
+		}
 		for (int i = 0; i < SIZE; i++)
 		{
-			// РЎРєР»Р°РґС‹РІР°РµРј СЃСѓРјРјСѓ С‚РµРєСѓС‰РµРіРѕ РїРѕСЂСЏРґРєР° Рё РїСЂРµРґС‹РґСѓС‰РµРіРѕ
-			tSumm = (isNegative ? -1 : 1)*atoi(dArray[i]) + (c.isNegative ? -1 : 1)*atoi(c.dArray[i]) + tSumm;
-			tRemndr = tSumm % 10; // РћСЃС‚Р°С‚РѕРє РѕС‚ Р±Р°Р·С‹ - РїРѕСЃР»РµРґРЅСЏСЏ С†РёС„СЂР°
-			if (tRemndr < 0)//РџСЂРё РѕС‚РїСЂР°РІРєРµ
+			// Складываем сумму текущего порядка и предыдущего
+			tSumm = (tTerm_1.isNegative ? -1 : 1)*atoi(tTerm_1.dArray[i]) + (tTerm_2.isNegative ? -1 : 1)*atoi(tTerm_2.dArray[i]) + tSumm;
+			tRemndr = tSumm % 10; // Остаток от базы - последняя цифра
+			if (tRemndr < 0)//При отправке
 			{
 				tRemndr += 10;
 				tSumm -= 10;
@@ -180,49 +223,37 @@ public:
 			tResult.dArray[i] = untoi(tRemndr);
 			tSumm /= 10;
 		}
+		tResult.isNegative = NegativeResult;
 		return tResult;
 	}
 	TUInt operator-(const TUInt &c)
 	{
-		TUInt tResult;
-		int tSumm = 0;
-		int tRemndr;
-		for (int i = 0; i < SIZE; i++)
-		{
-			tSumm = (isNegative ? -1 : 1)*atoi(dArray[i]) - (c.isNegative ? -1 : 1)*atoi(c.dArray[i]) + tSumm;
-			tRemndr = tSumm % 10;
-			if (tRemndr < 0)
-			{
-				tRemndr = 10 + tRemndr;
-				tSumm -= 10;
-			}
-			tResult.dArray[i] = untoi(tRemndr);
-			tSumm /= 10;
-		}
-		return tResult;
+		TUInt tResult(c);
+		tResult.isNegative = !tResult.isNegative;
+		return ((*this) + tResult);
 	}
 	TUInt operator*(const TUInt &c)
 	{
 		TUInt tSumm;
 		TUInt tResult;
-		int tRemndr_1 = 0; //РѕСЃС‚Р°С‚РѕРє
-		int tRemndr_2 = 0; //РѕСЃС‚Р°С‚РѕРє РЅР° СЂР°Р·СЂСЏРґ РІС‹С€Рµ
+		int tRemndr_1 = 0; //остаток
+		int tRemndr_2 = 0; //остаток на разряд выше
 
 		for (int j = 0; j < SIZE; j++)
 		{
 			for (int i = 0; i < SIZE - j; i++)
 			{
-				if (c.dArray[j] == '0') // РџСЂРѕРїСѓСЃРєР°РµРј 0 РїСЂРё СѓРјРЅРѕР¶РµРЅРёРёС‘
+				if (c.dArray[j] == '0') // Пропускаем 0 при умноженииё
 					continue;
 
-				tRemndr_2 = atoi(dArray[i]) * atoi(c.dArray[j]); // РџСЂРѕРёР·РІРµРґРµРЅРёРµ РґРІСѓС… С‡РёСЃРµР»
-				tSumm.dArray[i + j] = untoi((tRemndr_2 += tRemndr_1) % 10); // Р—Р°РїРёСЃС‹РІР°РµРј С‡РёСЃР»Рѕ РІ РјР°СЃСЃРёРІ
-				tRemndr_1 = tRemndr_2 / 10; // РЎРґРІРёРіР°РµРј 
+				tRemndr_2 = atoi(dArray[i]) * atoi(c.dArray[j]); // Произведение двух чисел
+				tSumm.dArray[i + j] = untoi((tRemndr_2 += tRemndr_1) % 10); // Записываем число в массив
+				tRemndr_1 = tRemndr_2 / 10; // Сдвигаем 
 			}
-			tResult = tResult + tSumm; // РЎСѓРјРјРёСЂСѓРµРј РїСЂРѕРјРµР¶СѓС‚РѕС‡РЅС‹Рµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
-			tSumm = "0"; // РћР±РЅСѓР»СЏРµРј РІСЃС‘
+			tResult = tResult + tSumm; // Суммируем промежуточные произведение
+			tSumm = "0"; // Обнуляем всё
 		}
-		tResult.isNegative = (isNegative && c.isNegative) || (isNegative && !c.isNegative) || (!isNegative && c.isNegative); // РћРїСЂРµРґРµР»СЏРµРј Р·РЅР°Рє
+		tResult.isNegative = (isNegative && !c.isNegative) || (!isNegative && c.isNegative); // Определяем знак
 		return tResult;
 	}
 
@@ -235,85 +266,91 @@ public:
 	}
 	bool operator<(const TUInt &c)
 	{
-	for (int i = SIZE; i >= 0; i--)
+		for (int i = SIZE; i >= 0; i--)
 		{
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° РјРµРЅСЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ true
-		if (atoi(dArray[i]) < atoi(c.dArray[i]))
-			if (*this == (TUInt)c)
-				return false;
-			else
-				return true;
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° Р±РѕР»СЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ false
+			//если элемент массива меньше , возвращает true
+			if (atoi(dArray[i]) < atoi(c.dArray[i]))
+				if (*this == (TUInt)c)
+					return (isNegative ? true : false);
+				else
+					return (isNegative ? false : true);
+			//если элемент массива больше , возвращает false
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
-				return false;
+				return (isNegative ? true : false);
 		}
-		return false;
+		return (isNegative ? true : false);
 	}
 	bool operator>(const TUInt &c)
 	{
-		for(int i = SIZE; i <= 0; i--)
+		for (int i = SIZE; i >= 0; i--)
 		{
+			//если элемент массива меньше , возвращает true
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
 				if (*this == (TUInt)c)
-					return false;
+					return (isNegative ? true : false);
 				else
-					return true;
-
+					return (isNegative ? false : true);
+			//если элемент массива больше , возвращает false
 			if (atoi(dArray[i]) < atoi(c.dArray[i]))
-				return false;
+				return (isNegative ? true : false);
 		}
-		return false;
+		return (isNegative ? true : false);
 	}
 	bool operator<=(const TUInt &c)
 	{
 		for (int i = SIZE; i >= 0; i--)
 		{
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° РјРµРЅСЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ true
+			//если элемент массива меньше , возвращает true
 			if (atoi(dArray[i]) < atoi(c.dArray[i]))
-				return true;
-			//РµСЃР»Рё СЌР»РµРјРµРЅС‚ РјР°СЃСЃРёРІР° Р±РѕР»СЊС€Рµ , РІРѕР·РІСЂР°С‰Р°РµС‚ false
+				return (isNegative ? false : true);
+			//если элемент массива больше , возвращает false
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
-				return false;
+				return (isNegative ? true : false);
 		}
+		return (isNegative ? false : true);
 	}
 	bool operator>=(const TUInt &c)
 	{
 		for (int i = SIZE; i >= 0; i--)
 		{
+			//если элемент массива меньше , возвращает true
 			if (atoi(dArray[i]) > atoi(c.dArray[i]))
-				return true;
-
+				return (isNegative ? false : true);
+			//если элемент массива больше , возвращает false
 			if (atoi(dArray[i]) < atoi(c.dArray[i]))
-				return false;
+				return (isNegative ? true : false);
 		}
+		return (isNegative ? false : true);
 	}
 
 	TUInt operator/(const TUInt &c)
 	{
+		bool started = false;
 		int i = SIZE;
 		TUInt tResult;
-		TUInt dividendPart;//РџСЂРѕРјРµР¶СѓС‚РѕС‡РЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
-						   //Р Р°Р±РѕС‚Р°РµРј СЃ РјРѕРґСѓР»СЏРјРё С‡РёСЃРµР»
-		TUInt divider(abs(c));// Р”РµР»РёС‚РµР»СЊ
-		TUInt dividend(abs(*this));// Р”РµР»РёРјРѕРµ
+		TUInt dividendPart;//Промежуточное произведение
+		//Работаем с модулями чисел
+		TUInt divider(Abs(c));// Делитель
+		TUInt dividend(Abs(*this));// Делимое
 
 		if (divider == (TUInt)0)
 		{
 			throw "DEVIDE BY ZERO";
 			return 0;
 		}
-
-		bool started = false;
-
 		do
 		{
 			while (dividendPart < divider && i-- > 0)
 			{
 				dividendPart.LevelUp();
 				dividendPart.dArray[0] = dividend.dArray[i];
+
+				int y = 1;
+
 				if (dividend.dArray[i] != '0')
 					started = true;
-				if ((dividendPart < divider) && started && dividend.dArray[i] != '0')
+
+				if (dividendPart < divider && started && i > 0)
 					tResult.LevelUp();
 			}
 			while (dividendPart >= divider)
@@ -327,56 +364,45 @@ public:
 			tResult.LevelUp();
 		} while (i > 0);
 
-		//РћРїСЂРµРґРµР»СЏРµРј Р·РЅР°Рє
-		tResult.isNegative = (isNegative && c.isNegative) || (isNegative && !c.isNegative) || (!isNegative && c.isNegative);
+		//Определяем знак
+		tResult.isNegative = (isNegative && !c.isNegative) || (!isNegative && c.isNegative);
 		return tResult;
 	}
 	TUInt operator%(const TUInt &c)
 	{
-		int i = SIZE;
-		TUInt tResult;
-		TUInt dividendPart;//РџСЂРѕРјРµР¶СѓС‚РѕС‡РЅРѕРµ РїСЂРѕРёР·РІРµРґРµРЅРёРµ
-		//Р Р°Р±РѕС‚Р°РµРј СЃ РјРѕРґСѓР»СЏРјРё С‡РёСЃРµР»
-		TUInt divider(abs(c));// Р”РµР»РёС‚РµР»СЊ
-		TUInt dividend(abs(*this));// Р”РµР»РёРјРѕРµ
+		return (*this) - ((*this) / c) * c;
+	}
 
-		if (divider == (TUInt)0)
+	TUInt operator++()
+	{
+		return (*this) + 1;
+	}
+	//Количество знаков
+	TUInt Length()
+	{
+		int i = 0;
+		for (i = SIZE - 1; i >= 0; i--)
 		{
-			throw "DEVIDE BY ZERO";
-			return 0;
-		}
-
-		bool started = false;
-
-		do
-		{
-			while (dividendPart < divider && i-- > 0)
-			{
-				dividendPart.LevelUp();
-				dividendPart.dArray[0] = dividend.dArray[i];
-				if (dividend.dArray[i] != '0')
-					started = true;
-				if ((dividendPart < divider) && started && dividend.dArray[i] != '0')
-					tResult.LevelUp();
-			}
-			while (dividendPart >= divider)
-			{
-				dividendPart = dividendPart - divider;
-				tResult = tResult + "1";
-			}
-			if (i <= 0)
+			if (dArray[i] != '0')
 				break;
+		}
+		return i + 1;
+	}
 
-			tResult.LevelUp();
-		} while (i > 0);
-		//РћРїСЂРµРґРµР»СЏРµРј Р·РЅР°Рє
-		tResult.isNegative = (isNegative && c.isNegative) || (isNegative && !c.isNegative) || (!isNegative && c.isNegative);
+	//Возведение в степень
+	TUInt Power(int c)
+	{
+		if (c < 0)
+			//Целая часть всегда равна 0
+			return 0;
 
-		tResult = (*this) - tResult * c;
-
+		TUInt tResult(1);
+		for (; c > 0; c--)
+			tResult = tResult * (*this);
 		return tResult;
 	}
-	TUInt abs(const TUInt &c)
+	//Модуль
+	TUInt Abs(const TUInt &c)
 	{
 		TUInt tResult(c);
 		for (int i = 0; i < SIZE; i++)
@@ -409,11 +435,11 @@ ostream& operator<<(ostream& os, TUInt &c)
 
 int main() {
 	setlocale(LC_ALL, "Russian");
-	
-	TUInt i = 25;
-	TUInt j = 5;
 
-	cout << "РћР±С‹С‡РЅС‹Рµ С‡РёСЃР»Р°: " << endl;
+	TUInt i = "-25";
+	TUInt j = "-5";
+
+	cout << "Обычные числа: " << endl;
 	cout << i << " + " << j << " = " << i + j << endl;
 	cout << i << " - " << j << " = " << i - j << endl;
 	cout << i << " * " << j << " = " << i * j << endl;
@@ -421,10 +447,10 @@ int main() {
 	cout << i << " % " << j << " = " << i % j << endl;
 	cout << endl;
 
-	i = "98219407219253";
-	j = 2891;
+	i = "297328756328056327889021782927819427412";
+	j = "9841194";
 
-	cout << "Р”Р»РёРЅРЅС‹Рµ С‡РёСЃР»Р°: " << endl;
+	cout << "Длинные числа: " << endl;
 	cout << i << " + " << j << " = " << i + j << endl;
 	cout << i << " - " << j << " = " << i - j << endl;
 	cout << i << " * " << j << " = " << i * j << endl;
@@ -435,20 +461,40 @@ int main() {
 	i = "10";
 	j = 10;
 
-	cout << "РЎСЂР°РІРЅРµРЅРёСЏ С‡РёСЃРµР»: " << endl;
+	cout << "Сравнения чисел: " << endl;
 	cout << i << " < " << j << " = " << (i < j ? "true" : "false") << endl;
 	cout << i << " <= " << j << " = " << (i <= j ? "true" : "false") << endl;
 	cout << i << " > " << j << " = " << (i > j ? "true" : "false") << endl;
 	cout << i << " >= " << j << " = " << (i >= j ? "true" : "false") << endl;
 	cout << endl;
 
-	i = "2382194072192535";
-	j = "9821940721925309";
+	i = "101";
+	j = "10";
 
 	cout << i << " < " << j << " = " << (i < j ? "true" : "false") << endl;
 	cout << i << " <= " << j << " = " << (i <= j ? "true" : "false") << endl;
 	cout << i << " > " << j << " = " << (i > j ? "true" : "false") << endl;
 	cout << i << " >= " << j << " = " << (i >= j ? "true" : "false") << endl;
+	cout << endl;
+
+	i = 2;
+
+	cout << "Степени 2-ки: " << endl;
+	cout << i << " ^ " << -1 << " = " << i.Power(-1) << endl;
+	cout << i << " ^ " << 0 << " = " << i.Power(0) << endl;
+	cout << i << " ^ " << 1 << " = " << i.Power(1) << endl;
+	cout << i << " ^ " << 2 << " = " << i.Power(2) << endl;
+	cout << i << " ^ " << 3 << " = " << i.Power(3) << endl;
+	cout << "..." << endl;
+	cout << i << " ^ " << 32 << " = " << (j = i.Power(32)) << endl;
+	cout << "Кол-во знаков: " << j.Length() << endl;
+	cout << "..." << endl;
+	cout << i << " ^ " << 64 << " = " << (j = i.Power(64)) << endl;
+	cout << "Кол-во знаков: " << j.Length() << endl;
+	cout << "..." << endl;
+	cout << i << " ^ " << 163 << " = " << (j = i.Power(163)) << endl;
+	cout << "Кол-во знаков: " << j.Length() << endl;
+
 	system("pause");
 	return 0;
 }
