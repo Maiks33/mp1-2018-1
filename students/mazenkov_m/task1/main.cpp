@@ -40,15 +40,15 @@ public:
 	}
 	double Faringeit()
 	{
-		return (9.0 / 5.0)*temp + 32.0;
+		return (9 / 5)*temp + 32;
 	}
 	double Kelvin()
 	{
-		return temp + 273.0;
+		return temp + 273;
 	}
 	double Rankin()
 	{
-		return (temp + 273.0)*(9.0 / 5.0);
+		return (temp + 273)*(9 / 5);
 	}
 };
 int main()
