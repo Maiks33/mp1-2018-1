@@ -20,6 +20,7 @@ public:
 	void display() // output on display
 	{
 		cout << "Weight in kg: " << kg << endl;
+		system("pause");
 	}
 	double killograms() 
 	{
@@ -41,14 +42,17 @@ public:
 	void displayPharmacyPound()
 	{
 		cout << "Weight in pharmacy pound:" << pharmacyPound() << endl;
+		system("pause");
 	}
 	void displayTroyOunce()
 	{
 		cout << "Weight in troy ounce:" << troyOunce() << endl;
+		system("pause");
 	}
 	void displayPood()
 	{
 		cout << "Weight in pood:" << pood() << endl;
+		system("pause");
 	}
 };
 
