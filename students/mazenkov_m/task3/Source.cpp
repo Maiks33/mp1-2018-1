@@ -41,45 +41,46 @@ public:
 		delete[] Result;
 		Result = new double[count];
 	}
-	void SetStep(double max, double x, int count) // установка шага
-	{
-		step = (max - x) / count;
-	}
 
 	void Tabulate(double x) // табулирование функции
 	{
+		step = (right - x) / StepsCount;
 		for (int i = 0; i < StepsCount; i++)
 		{
 			Result[i] = function(x);
-			x = (x + step);
+			x += step;
 		}
 	}
 
 	void ShowResult(double x) // вывод результата табулирования
 	{
+		step = (right - x) / StepsCount;
 		cout << "Количество точек табулирования: " << StepsCount << endl;
-		cout << "Левая граница табулирования: " << left << endl;
+		cout << "Левая граница табулирования: " << x << endl;
 		cout << "Правая граница табулирования: " << right << endl;
 		cout << "Шаг табуляции: " << step << endl;
 		for (int i = 0; i < StepsCount; i++)
 		{
-			cout << " Значение функции: " << Result[i] << endl;
-			x = (x + step);
+			cout << "Значение аргумента: " << x << endl;
+			cout << "Значение функции: " << Result[i] << endl;
+			x += step;
 		}
 
 	}
 
 	void WorkWithFile(double x) // работа с файлом
 	{
+		step = (right - x) / StepsCount;
 		ofstream fout("Отчёт.txt"); // создаём объект класса ofstream в папке с проектом
 		fout << "Количество точек табулирования: " << StepsCount << endl;
-		fout << "Левая граница табулирования: " << left << endl;
+		fout << "Левая граница табулирования: " << x << endl;
 		fout << "Правая граница табулирования: " << right << endl;
 		fout << "Шаг табуляции: " << step << endl;
 		for (int i = 0; i < StepsCount; i++)
 		{
-			fout << " Значение функции: " << Result[i] << endl;
-			x = (x + step);
+			fout << "Значение аргумента: " << x << endl;
+			fout << "Значение функции: " << Result[i] << endl;
+			x += step;
 		}
 		fout.close();
 	}
@@ -131,7 +132,6 @@ rep:
 		cout << "Введите границы табуляции " << endl;
 		cout << "Табулировать от: "; cin >> x; cout << "До: "; cin >> max;
 		Tab.SetBorder(x, max);
-		Tab.SetStep(max, x, count);
 		Tab.Tabulate(x);
 		Tab.ShowResult(x);
 		Tab.WorkWithFile(x);
@@ -150,7 +150,6 @@ rep:
 		cout << "Введите границы табуляции " << endl;
 		cout << "Табулировать от: "; cin >> x; cout << "До: "; cin >> max;
 		Tab.SetBorder(x, max);
-		Tab.SetStep(max, x, count);
 		Tab.Tabulate(x);
 		Tab.ShowResult(x);
 		Tab.WorkWithFile(x);
@@ -169,7 +168,6 @@ rep:
 		cout << "Введите границы табуляции " << endl;
 		cout << "Табулировать от: "; cin >> x; cout << "До: "; cin >> max;
 		Tab.SetBorder(x, max);
-		Tab.SetStep(max, x, count);
 		Tab.Tabulate(x);
 		Tab.ShowResult(x);
 		Tab.WorkWithFile(x);
