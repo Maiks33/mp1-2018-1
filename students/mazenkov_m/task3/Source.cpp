@@ -61,8 +61,7 @@ public:
 		cout << "Шаг табуляции: " << step << endl;
 		for (int i = 0; i < StepsCount; i++)
 		{
-			cout << "Значение аргумента: " << x << endl;
-			cout << "Значение функции: " << Result[i] << endl;
+			cout << "Значение аргумента: " << x << " Значение функции: " << Result[i] << endl;;
 			x += step;
 		}
 
@@ -78,8 +77,7 @@ public:
 		fout << "Шаг табуляции: " << step << endl;
 		for (int i = 0; i < StepsCount; i++)
 		{
-			fout << "Значение аргумента: " << x << endl;
-			fout << "Значение функции: " << Result[i] << endl;
+			fout << "Значение аргумента: " << x << " Значение функции: " << Result[i] << endl;
 			x += step;
 		}
 		fout.close();
