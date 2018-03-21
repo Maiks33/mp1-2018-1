@@ -61,7 +61,7 @@ public:
 		}
 	}
 
-	~FunctionTabulator()
+	~FunctionTabulator()//деструктор
 	{
 		delete[] ResultFunc;
 		delete[] Argument;
@@ -71,14 +71,7 @@ public:
 	{
 		function = _function;
 	}
-
-	void SetBorder(double x, double max) // установка границ табулирования
-	{
-		left = x;
-		right = max;
-	}
-
-	void SetStepsCount(double count) //счётчик шагов
+	void SetStepsCount(double count) //задать число точек
 	{
 		StepsCount = count;
 		delete[] ResultFunc;
@@ -87,7 +80,26 @@ public:
 		Argument = new double[count];
 	}
 
-	void Tabulate() // табулирование функции
+	int ShowStepsCount() //узнать число точек
+	{
+		return StepsCount;
+	}
+
+	void SetBorder(double x, double max) // задать отрезок табулирования
+	{
+		left = x;
+		right = max;
+	}
+
+	double ShowLeftBorder()// узнать левую границу
+	{
+		return Argument[0];
+	}
+	double ShowRightBorder()// узнать правую границу
+	{
+		return right;
+	}
+	void Tabulate() // выполнить табуляцию функции
 	{
 		step = (right - left) / StepsCount;
 		for (int i = 0; i < StepsCount; i++)
@@ -97,14 +109,10 @@ public:
 			left += step;
 		}
 	}
-
-	void ShowResultFunc() // вывод результата табулирования
+	
+	void ShowResultFunc() // выдать результат табулирования
 	{
 		step = (right - Argument[0]) / StepsCount;
-		cout << "Количество точек табулирования: " << StepsCount << endl;
-		cout << "Левая граница табулирования: " << Argument[0] << endl;
-		cout << "Правая граница табулирования: " << right << endl;
-		cout << "Шаг табуляции: " << step << endl;
 		for (int i = 0; i < StepsCount; i++)
 		{
 			cout << "Значение аргумента: " << Argument[i] << " Значение функции: " << ResultFunc[i] << endl;;
@@ -112,14 +120,13 @@ public:
 
 	}
 
-	void WorkWithFile() // работа с файлом
+	void WorkWithFile() // сохранить результат табулирования в файл
 	{
 		step = (right - Argument[0]) / StepsCount;
 		ofstream fout("Отчёт.txt"); // создаём объект класса ofstream в папке с проектом
 		fout << "Количество точек табулирования: " << StepsCount << endl;
 		fout << "Левая граница табулирования: " << Argument[0] << endl;
 		fout << "Правая граница табулирования: " << right << endl;
-		fout << "Шаг табуляции: " << step << endl;
 		for (int i = 0; i < StepsCount; i++)
 		{
 			fout << "Значение аргумента: " << Argument[i] << " Значение функции: " << ResultFunc[i] << endl;
@@ -175,6 +182,10 @@ rep:
 		cout << "Табулировать от: "; cin >> x; cout << "До: "; cin >> max;
 		Tab.SetBorder(x, max);
 		Tab.Tabulate();
+		system("cls");
+		cout << "Левая граница таблурирования " << Tab.ShowLeftBorder() << endl;
+		cout << "Правая граница таблурирования " << Tab.ShowRightBorder() << endl;
+		cout << "Количество шагов табулироваяния " << Tab.ShowStepsCount() << endl;
 		Tab.ShowResultFunc();
 		Tab.WorkWithFile();
 		system("pause");
@@ -192,7 +203,11 @@ rep:
 		cout << "Введите границы табуляции " << endl;
 		cout << "Табулировать от: "; cin >> x; cout << "До: "; cin >> max;
 		Tab.SetBorder(x, max);
+		system("cls");
 		Tab.Tabulate();
+		cout << "Левая граница таблурирования " << Tab.ShowLeftBorder() << endl;
+		cout << "Правая граница таблурирования " << Tab.ShowRightBorder() << endl;
+		cout << "Количество шагов табулироваяния " << Tab.ShowStepsCount() << endl;
 		Tab.ShowResultFunc();
 		Tab.WorkWithFile();
 		system("pause");
@@ -210,7 +225,11 @@ rep:
 		cout << "Введите границы табуляции " << endl;
 		cout << "Табулировать от: "; cin >> x; cout << "До: "; cin >> max;
 		Tab.SetBorder(x, max);
+		system("cls");
 		Tab.Tabulate();
+		cout << "Левая граница таблурирования " << Tab.ShowLeftBorder() << endl;
+		cout << "Правая граница таблурирования " << Tab.ShowRightBorder() << endl;
+		cout << "Количество шагов табулироваяния " << Tab.ShowStepsCount() << endl;
 		Tab.ShowResultFunc();
 		Tab.WorkWithFile();
 		system("pause");
