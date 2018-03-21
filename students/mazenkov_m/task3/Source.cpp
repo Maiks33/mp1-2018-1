@@ -25,6 +25,42 @@ public:
 		ResultFunc = new double[_StepsCount];
 		Argument = new double[_StepsCount];
 	}
+
+	FunctionTabulator(FunctionTabulator const &Tabulation) //конструктор копирования
+	{
+		StepsCount = Tabulation.StepsCount;
+		left = Tabulation.left;
+		right = Tabulation.right;
+		ResultFunc = new double[StepsCount];
+		Argument = new double[StepsCount];
+		for (int i = 0; i < StepsCount; i++)
+		{
+			ResultFunc[i] = Tabulation.ResultFunc[i];
+			Argument[i] = Tabulation.Argument[i];
+		}
+	}
+
+	FunctionTabulator& operator=(const FunctionTabulator& Tabulation) //оператор присваивания
+	{
+		if (this == &Tabulation)
+			return *this;
+		if (StepsCount != Tabulation.StepsCount)
+		{
+			delete[] ResultFunc;
+			delete[] Argument;
+			ResultFunc = new double[Tabulation.StepsCount];
+			Argument = new double[Tabulation.StepsCount];
+			StepsCount = Tabulation.StepsCount;
+		}
+		left = Tabulation.left;
+		right = Tabulation.right;
+		for (int i = 0; i < StepsCount; i++)
+		{
+			ResultFunc[i] = Tabulation.ResultFunc[i];
+			Argument[i] = Tabulation.Argument[i];
+		}
+	}
+
 	~FunctionTabulator()
 	{
 		delete[] ResultFunc;
@@ -64,31 +100,29 @@ public:
 
 	void ShowResultFunc() // вывод результата табулирования
 	{
-		step = (right - left) / StepsCount;
+		step = (right - Argument[0]) / StepsCount;
 		cout << "Количество точек табулирования: " << StepsCount << endl;
-		cout << "Левая граница табулирования: " << left << endl;
+		cout << "Левая граница табулирования: " << Argument[0] << endl;
 		cout << "Правая граница табулирования: " << right << endl;
 		cout << "Шаг табуляции: " << step << endl;
 		for (int i = 0; i < StepsCount; i++)
 		{
 			cout << "Значение аргумента: " << Argument[i] << " Значение функции: " << ResultFunc[i] << endl;;
-			left += step;
 		}
 
 	}
 
 	void WorkWithFile() // работа с файлом
 	{
-		step = (right - left) / StepsCount;
+		step = (right - Argument[0]) / StepsCount;
 		ofstream fout("Отчёт.txt"); // создаём объект класса ofstream в папке с проектом
 		fout << "Количество точек табулирования: " << StepsCount << endl;
-		fout << "Левая граница табулирования: " << left << endl;
+		fout << "Левая граница табулирования: " << Argument[0] << endl;
 		fout << "Правая граница табулирования: " << right << endl;
 		fout << "Шаг табуляции: " << step << endl;
 		for (int i = 0; i < StepsCount; i++)
 		{
 			fout << "Значение аргумента: " << Argument[i] << " Значение функции: " << ResultFunc[i] << endl;
-			left += step;
 		}
 		fout.close();
 	}
