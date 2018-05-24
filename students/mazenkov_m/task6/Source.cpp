@@ -129,8 +129,8 @@ for (int i = 0; i < lenght; i++)
 		if (BullsAndCows.GetNumber(num) == 1)
 		{
 			_steps++;
-			cout << "Количество коров:" << BullsAndCows.CheckBulls() << endl;
-			cout << "Количество быков:" << BullsAndCows.CheckCows() << endl;
+			cout << "Количество коров:" << BullsAndCows.CheckCows() << endl;
+			cout << "Количество быков:" << BullsAndCows.CheckBulls() << endl;
 			cout << endl;
 			if (BullsAndCows.CheckWin(BullsAndCowsWin) == true)
 			{
